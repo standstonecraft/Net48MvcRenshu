@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net48MvcRenshuModeling", "Net48MvcRenshuModeling\Net48MvcRenshuModeling.csproj", "{E25FD0F9-B8F9-45D0-B330-1B37564B140B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{8A865F0E-4AEB-49CD-8134-9DA90A8AE12D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A865F0E-4AEB-49CD-8134-9DA90A8AE12D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A865F0E-4AEB-49CD-8134-9DA90A8AE12D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E25FD0F9-B8F9-45D0-B330-1B37564B140B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E25FD0F9-B8F9-45D0-B330-1B37564B140B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E25FD0F9-B8F9-45D0-B330-1B37564B140B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E25FD0F9-B8F9-45D0-B330-1B37564B140B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

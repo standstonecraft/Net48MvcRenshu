@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Net48MvcRenshu.Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="student_no" />
+          </Key>
+          <Property Name="student_no" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="sei" Type="nvarchar" MaxLength="50" />
+          <Property Name="mei" Type="nvarchar" MaxLength="50" />
+          <Property Name="sei_kana" Type="nvarchar" MaxLength="50" />
+          <Property Name="mei_kana" Type="nvarchar" MaxLength="50" />
+          <Property Name="birth_date" Type="date" />
+          <Property Name="blood_type" Type="nvarchar" MaxLength="10" />
+          <Property Name="gender" Type="nvarchar" MaxLength="10" />
+          <Property Name="phone" Type="nvarchar" MaxLength="15" />
+          <Property Name="postal_code" Type="nvarchar" MaxLength="8" />
+          <Property Name="addr_pref" Type="nvarchar" MaxLength="10" />
+          <Property Name="addr_city" Type="nvarchar" MaxLength="20" />
+          <Property Name="addr_street" Type="nvarchar" MaxLength="60" />
+          <Property Name="addr_building" Type="nvarchar" MaxLength="60" />
+          <Property Name="addr_pref_kana" Type="nvarchar" MaxLength="10" />
+          <Property Name="addr_city_kana" Type="nvarchar" MaxLength="20" />
+          <Property Name="addr_street_kana" Type="nvarchar" MaxLength="60" />
+          <Property Name="addr_building_kana" Type="nvarchar" MaxLength="60" />
+        </EntityType>
+        <EntityContainer Name="Net48MvcRenshuModelsStoreContainer">
+          <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Net48MvcRenshu.Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="student_no" />
+          </Key>
+          <Property Name="student_no" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sei" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="mei" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sei_kana" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="mei_kana" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="birth_date" Type="DateTime" Precision="0" />
+          <Property Name="blood_type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="postal_code" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="addr_pref" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="addr_city" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="addr_street" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="addr_building" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="addr_pref_kana" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="addr_city_kana" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="addr_street_kana" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="addr_building_kana" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="Net48MvcRenshuDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Students" EntityType="Self.Student" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Net48MvcRenshuModelsStoreContainer" CdmEntityContainer="Net48MvcRenshuDbEntities">
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="Net48MvcRenshu.Models.Student">
+              <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="student_no" ColumnName="student_no" />
+                <ScalarProperty Name="sei" ColumnName="sei" />
+                <ScalarProperty Name="mei" ColumnName="mei" />
+                <ScalarProperty Name="sei_kana" ColumnName="sei_kana" />
+                <ScalarProperty Name="mei_kana" ColumnName="mei_kana" />
+                <ScalarProperty Name="birth_date" ColumnName="birth_date" />
+                <ScalarProperty Name="blood_type" ColumnName="blood_type" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="postal_code" ColumnName="postal_code" />
+                <ScalarProperty Name="addr_pref" ColumnName="addr_pref" />
+                <ScalarProperty Name="addr_city" ColumnName="addr_city" />
+                <ScalarProperty Name="addr_street" ColumnName="addr_street" />
+                <ScalarProperty Name="addr_building" ColumnName="addr_building" />
+                <ScalarProperty Name="addr_pref_kana" ColumnName="addr_pref_kana" />
+                <ScalarProperty Name="addr_city_kana" ColumnName="addr_city_kana" />
+                <ScalarProperty Name="addr_street_kana" ColumnName="addr_street_kana" />
+                <ScalarProperty Name="addr_building_kana" ColumnName="addr_building_kana" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
