@@ -1,0 +1,175 @@
+﻿@model Net48MvcRenshu.Models.UploadFilesModel
+
+@{
+    ViewBag.Title = "UploadFiles";
+}
+@section Styles {
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-tagsinput@0.7.1/dist/bootstrap-tagsinput.css"
+          integrity="sha256-+dKYRrdy+cKP5KD/4ma/RBGn57RlCJg1OvJzGks/E1k=" crossorigin="anonymous">
+    <style>
+        .bootstrap-tagsinput{
+            line-height: 2;
+        }
+        .tagsinput-tag {
+            background-color: Highlight;
+            margin-right: 2px;
+            padding: 2px 4px;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            .tagsinput-tag.tagsinput-tag-local {
+                background-color: goldenrod;
+                cursor: auto;
+            }
+    </style>
+}
+
+<h2>UploadFiles</h2>
+
+
+@using (Html.BeginForm("Update", "UploadFiles",FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>UploadFilesModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-10">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary" type="button" id="addFile">Button</button>
+                    </div>
+                    <select multiple data-role="tagsinput sometext" id="fileList"></select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col">
+                <input type="submit" value="Update" class="btn btn-default" id="update" />
+            </div>
+        </div>
+    </div>
+    <div style="display:none">
+        @Html.HiddenFor(model => model.StoredFileJson)
+        @Html.HiddenFor(model => model.FileIdToRemove)
+        @for (int i = 0; i < 10; i++)
+        {
+            <input type="file" name="File" class="fileInput" />
+        }
+    </div>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-tagsinput@0.7.1/dist/bootstrap-tagsinput.min.js"
+            integrity="sha256-qErJbSp6E475pR/hJdpCvw76I8KND2+hQ25wkpA65pw=" crossorigin="anonymous"></script>
+    <script>
+        /** 削除するアップロード済みファイルのfileId
+         * @@type {string[]} */
+        let fileIdToRemove = [];
+        $(function () {
+            initializeTagsInput();
+            initializeFileInputs();
+            initializeAddFileButton();
+            initializeForm();
+        });
+
+        /**
+         * tagsInput の設定
+         *
+         * - tagsInputの初期化、クリックや削除時のイベント処理
+         * */
+        function initializeTagsInput() {
+            // tagsinputを初期化する
+            $('#fileList').tagsinput({
+                itemText: 'name',
+                itemValue: 'fileId',
+                tagClass: function (item) {
+                    return (item.local ? 'tagsinput-tag tagsinput-tag-local' : 'tagsinput-tag');
+                }
+            });
+
+            // 登録済みのファイルをtagsinputに表示する
+            const storedFile = JSON.parse($('#StoredFileJson').val());
+            storedFile.forEach(f => $('#fileList').tagsinput('add', f));
+            $('#fileList').tagsinput('refresh');
+
+            // クリックされたらダウンロードする(別タブアクションでダウンロード)
+            $('.tag.tagsinput-tag').on('click', evt => {
+                const idx = $(evt.target).index();
+                const fileId = $(evt.target).parent().next().children().eq(idx).val();
+                if (fileId) {
+                    window.open('@Url.Action("Download"
+                                     , "UploadFiles")?fileId=' + fileId
+                        , "_blank");
+                } else {
+                    // x button
+                }
+            });
+
+            // xボタンによる削除イベント
+            $('#fileList').on('beforeItemRemove', evt => {
+                if (evt.item.local) {
+                    // ローカルファイルの削除時
+                    [...$('.fileInput')]
+                        .filter(fi => $(fi).attr('data-fileId') == evt.item.fileId)
+                        .forEach(fi => fi.value = null);
+                } else {
+                    // アップロード済みファイルの削除時
+                    fileIdToRemove.push(evt.item.fileId);
+                }
+            });
+        }
+
+        /**
+         * 隠されたファイル入力の設定
+         *
+         * - ファイルが選択されたら fileList に表示する。
+         * */
+        function initializeFileInputs() {
+            [...$('.fileInput')].forEach(fi => {
+                $(fi).on('change', evt => {
+                    // xボタンで削除時にどのファイル入力か分かるように情報を残す
+                    const uid = new Date().getTime();
+                    $(fi).attr('data-name', fi.files[0].name);
+                    $(fi).attr('data-fileId', uid);
+
+                    // fileList に追加する
+                    $('#fileList').tagsinput('add', { name: fi.files[0].name, fileId: uid, local: true });
+                    $('#fileList').tagsinput('refresh');
+                })
+            })
+        }
+
+        /**
+         * addFile ボタンの設定
+         *
+         * - 隠されたファイル入力のうち未入力のものを探してクリックする。すべて埋まっていればクリックされない。
+         * */
+        function initializeAddFileButton() {
+            $('#addFile').on('click', () => {
+                /** 空のinput(file)
+                 * @@type {HTMLInputElement} */
+                const input = [...$('.fileInput')].find(fi => fi.files.length == 0);
+                if (input) {
+                    input.click();
+                } else {
+                    console.error('ファイル数の上限に達しました');
+                }
+            });
+        }
+
+        function initializeForm() {
+            $('form').submit(function (e) {
+                $('#FileIdToRemove').val(fileIdToRemove.join(','))
+                return true;
+            });
+        }
+    </script>
+}
